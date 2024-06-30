@@ -1,0 +1,3 @@
+alias up="cd .."
+alias here='pwd > ~/.here'
+alias there='cd `cat ~/.here`'
