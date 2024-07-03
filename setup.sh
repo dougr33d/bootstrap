@@ -23,6 +23,7 @@ else
     echo "Setting up aliases"
     echo "### Begin bootstrap" >> ~/.bashrc
     echo ". $PWD/bash/aliases" >> ~/.bashrc
+    echo ". $PWD/bash/scripts" >> ~/.bashrc
     echo "### End bootstrap"   >> ~/.bashrc
 fi
 
