@@ -48,3 +48,19 @@ else
     echo "installing plugins"
     vim +PluginInstall +qall
 fi
+
+####
+# XFCE setup
+
+echo
+echo "Setting up vim..."
+
+XFKBD_XML=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+if [ -L $XFKBD_XML ]; then
+    echo "skipping link (xfce4-keyboard-shortcuts.xml is already a symlink)"
+else
+    echo "linking xfce4 keyboard shortcuts"
+    cp $XFKBD_XML{,.bak}
+    ln -s $PWD/xfce/xfce4-keyboard-shortcuts.xml $XFKBD_XML
+fi
+
