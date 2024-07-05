@@ -1,0 +1,6 @@
+*.tgz
+bin
+include
+lib
+share
+/Python-*/
