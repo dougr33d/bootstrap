@@ -1,4 +1,10 @@
 """Helper functions"""
+import subprocess
+
+def do_cmd(command: str, check: bool = False) -> str:
+    """Given a command, run the command and return the output"""
+    rtn = subprocess.run(command.split(' '), stdout=subprocess.PIPE, check=check).stdout.decode('utf-8')
+    return rtn
 
 def banner(text: str, width: int) -> str:
     """Given a string, return a width-wide banner that wraps the string in hashes."""
@@ -16,5 +22,6 @@ def text_to_n_rows(text: str, num_rows: int) -> str:
     if len(lines) > num_rows-1:
         lines = lines[-1*(num_rows-1):]
     if len(lines) < num_rows:
-        lines.extend([''] * (num_rows - 1 - len(lines)))
+        lines.extend(['~'] * (num_rows - len(lines)))
+    assert len(lines) == num_rows
     return '\n'.join(lines)
