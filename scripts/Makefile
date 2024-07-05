@@ -1,4 +1,4 @@
-HOST_PYTHON3=/usr/bin/python3
+HOST_PYTHON3=$(shell which python3)
 VENV_BIN=venv/bin/
 VENV_PYTHON3=${VENV_BIN}/python3
 
