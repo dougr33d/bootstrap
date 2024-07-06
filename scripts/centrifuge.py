@@ -62,9 +62,6 @@ def find_first_match(matgroups: list[MatchGroup], line: str) -> MatchGroup:
 
 def spin_it(matgroups: list[MatchGroup], fn_log: str) -> dict:
     """Given the match groups and a log file, spin out to its contstituent parts"""
-    # matches:
-    # - match: '^@\[(\d+)\] .*unit:IC'
-    #     group: 'IC'
 
     groups: dict[str, dict] = {}
     with open(fn_log, 'r', encoding='utf-8') as fh_log:
@@ -104,8 +101,7 @@ def main(args):
 if __name__=='__main__':
     argparser = argparse.ArgumentParser(description='Split a single log file into N separate log files')
     argparser.add_argument('config', type=argparse.FileType('rb'), help='YAML config file')
-    # logfile is a str b/c we need to do string manip on filename
-    argparser.add_argument('logfile', type=str, help='Log file to split')
+    argparser.add_argument('logfile', type=str, help='Log file to split') # logfile is a str b/c we need to do string manip on filename
     argparser.add_argument('-s', '--strict', default=False, action='store_true', help='Strict mode (default: no catch-all default group)')
     argparser.add_argument('-d', '--default-group', type=str, default='OTHER', help='Catch-all group name (ignored in strict mode)')
     argparser.add_argument('-v', '--verbose', default=False, action='store_true', help='Verbose output')

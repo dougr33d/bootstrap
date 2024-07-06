@@ -54,7 +54,7 @@ fi
 # XFCE setup
 
 echo
-echo "Setting up vim..."
+echo "Setting up xfce..."
 
 XFKBD_XML=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 if [ -L $XFKBD_XML ]; then
