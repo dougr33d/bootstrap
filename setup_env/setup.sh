@@ -58,10 +58,12 @@ echo "Setting up xfce..."
 
 XFKBD_XML=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 if [ -L $XFKBD_XML ]; then
-    echo "skipping link (xfce4-keyboard-shortcuts.xml is already a symlink)"
+    echo "skipping link (${XFKBD_XML} is already a symlink)"
 else
     echo "linking xfce4 keyboard shortcuts"
-    cp $XFKBD_XML{,.bak}
+    if [ -e $XFKBD_XML ]; then
+        cp $XFKBD_XML{,.bak}
+    fi
     ln -s $PWD/xfce/xfce4-keyboard-shortcuts.xml $XFKBD_XML
 fi
 
