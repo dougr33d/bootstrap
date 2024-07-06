@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+
+matches:
+  - regex: ^@\[(\d+)\] .*unit:IC
+    group: FETCH
+  - regex: ^@\[(\d+)\] .*unit:FE
+    group: FETCH
+  - regex: ^@\[(\d+)\] .*unit:DE
+    group: DECODE
+  - regex: ^@\[(\d+)\] .*unit:EX
+    group: EXE
+  - regex: ^@\[(\d+)\] .*unit:MM
+    group: MEM
+  - regex: ^@\[(\d+)\] .*unit:RB
+    group: RETIRE
+  - regex: ^@\[(\d+)\] .*unit:RF
+    group: REGS
+  - regex: ^@\[(\d+)\] .*unit:RD
+    group: REGS

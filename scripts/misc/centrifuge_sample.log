@@ -1,0 +1,115 @@
+@[24] 11 tag: type:fe_fb_req id:0 addr:0000000000000000
+@[26] 12 tag: unit:IC type:fb_ic_req_nnn id:0 addr:0000000000000000
+@[26] 12 tag: type:pf_fb_req addr:0000000000000040
+@[28] 13 tag: unit:IC type:fb_ic_req_nnn id:1 addr:0000000000000040
+@[36] 17 tag: unit:IC type:ic_fb_rsp_nnn id:0 data:0052c333004242b30031c233002141b30010c1330010c0b30052c2b3004242330031c1b3002141330010c0b3020080930420001300101463020080930010c0b3
+@[38] 18 tag: unit:IC type:ic_fb_rsp_nnn id:1 data:0ba10113008111130fe10113008111130ca101130ef08093008090930be08093008090930ad08093008090930de080930010c0b3008444b30073c433006343b3
+@[40] 19 tag: type:fe_fb_req id:0 addr:0000000000000004
+@[40] 19 tag: type:fb_fe_rsp id:0 data:10c0b3
+@[40] 19 tag: unit:DE SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0
+@[40] 19 tag: unit:FE pc:0000000000000000 SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R
+@[40] 19 tag: unit:FE pc:0000000000000004 SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R
+@[42] 20 tag: unit:RF op:read addr: 1 data:00000000
+@[42] 20 tag: unit:RF op:read addr: 1 data:00000000
+@[42] 20 tag: type:fe_fb_req id:0 addr:0000000000000008
+@[42] 20 tag: type:pf_fb_req addr:0000000000000044
+@[42] 20 tag: type:fb_fe_rsp id:0 data:2008093
+@[42] 20 tag: unit:RD SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0
+@[42] 20 tag: unit:DE SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[42] 20 tag: unit:FE pc:0000000000000004 SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I
+@[42] 20 tag: unit:FE pc:0000000000000008 SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I
+@[44] 21 tag: unit:IC type:fb_ic_req_nnn id:0 addr:0000000000000044
+@[44] 21 tag: type:pf_fb_req addr:0000000000000048
+@[44] 21 tag: type:fb_fe_rsp id:0 data:101463
+@[44] 21 tag: unit:RD SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[44] 21 tag: unit:EX SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0 result:00000000
+@[44] 21 tag: unit:EX.IALU SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0 result:00000000
+@[46] 22 tag: unit:RD SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[46] 22 tag: unit:MM SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0
+@[48] 23 tag: unit:RD SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[48] 23 tag: unit:RB SIMID:00000000,0000000000000000 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0 result:00000000
+@[48] 23 tag: -------------------------------------
+@[48] 23 tag: PC:00000000 RV_OP_ALU0_R -> U_XOR
+@[48] 23 tag: src1: reg,x1  0x0               
+@[48] 23 tag: src2: reg,x1  0x0               
+@[48] 23 tag: rslt: reg,x1  0x0               
+@[50] 24 tag: unit:RF op:write addr: 1 data:00000000->00000000
+@[50] 24 tag: unit:RD SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[52] 25 tag: unit:RF op:read addr: 1 data:00000000
+@[52] 25 tag: type:fe_fb_req id:0 addr:000000000000000c
+@[52] 25 tag: unit:RD SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[52] 25 tag: unit:DE SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B
+@[52] 25 tag: unit:FE pc:0000000000000008 SIMID:00000002,0000000000000008 opcode:RV_OP_BR
+@[52] 25 tag: unit:FE pc:000000000000000c SIMID:00000002,0000000000000008 opcode:RV_OP_BR
+@[54] 26 tag: unit:IC type:ic_fb_rsp_nnn id:0 data:008111130ba10113008111130fe10113008111130ca101130ef08093008090930be08093008090930ad08093008090930de080930010c0b3008444b30073c433
+@[54] 26 tag: type:pf_fb_req addr:000000000000004c
+@[54] 26 tag: type:fb_fe_rsp id:0 data:4200013
+@[54] 26 tag: unit:RD SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B
+@[54] 26 tag: unit:EX SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0 result:00000020
+@[54] 26 tag: unit:EX.IALU SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0 result:00000020
+@[56] 27 tag: unit:RD SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B
+@[56] 27 tag: unit:MM SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[56] 27 tag: unit:EX.IBR SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B mispred:0 tkn:0 tru_tgt:c pcnxt:c 
+@[58] 28 tag: unit:RD SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B
+@[58] 28 tag: unit:EX.IBR SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B mispred:0 tkn:0 tru_tgt:c pcnxt:c 
+@[58] 28 tag: unit:RB SIMID:00000001,0000000000000004 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0 result:00000020
+@[58] 28 tag: -------------------------------------
+@[58] 28 tag: PC:00000004 RV_OP_ALU0_I -> U_ADD
+@[58] 28 tag: src1: reg,x1  0x0               
+@[58] 28 tag: src2: imm     0x0000000000000020
+@[58] 28 tag: rslt: reg,x1  0x20              
+@[60] 29 tag: unit:RF op:write addr: 1 data:00000000->00000020
+@[60] 29 tag: unit:RD SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B
+@[60] 29 tag: unit:EX.IBR SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B mispred:0 tkn:0 tru_tgt:c pcnxt:c 
+@[62] 30 tag: unit:RF op:read addr: 0 data:00000000
+@[62] 30 tag: unit:RF op:read addr: 1 data:00000020
+@[62] 30 tag: type:fe_fb_req id:0 addr:0000000000000010
+@[62] 30 tag: unit:RD SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B
+@[62] 30 tag: unit:DE SIMID:00000003,000000000000000c opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x0 rs1:x0 imm64:0x42 funct3:0
+@[62] 30 tag: unit:FE pc:000000000000000c SIMID:00000003,000000000000000c opcode:RV_OP_ALU0_I
+@[62] 30 tag: unit:FE pc:0000000000000010 SIMID:00000003,000000000000000c opcode:RV_OP_ALU0_I
+@[62] 30 tag: unit:EX.IBR SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B mispred:0 tkn:0 tru_tgt:c pcnxt:c 
+@[64] 31 tag: unit:RF op:read addr: 0 data:00000000
+@[64] 31 tag: type:fe_fb_req id:0 addr:0000000000000014
+@[64] 31 tag: type:pf_fb_req addr:0000000000000050
+@[64] 31 tag: type:fb_fe_rsp id:0 data:2008093
+@[64] 31 tag: unit:RD SIMID:00000003,000000000000000c opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x0 rs1:x0 imm64:0x42 funct3:0
+@[64] 31 tag: unit:DE SIMID:00000004,0000000000000010 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[64] 31 tag: unit:FE pc:0000000000000010 SIMID:00000004,0000000000000010 opcode:RV_OP_ALU0_I
+@[64] 31 tag: unit:FE pc:0000000000000014 SIMID:00000004,0000000000000010 opcode:RV_OP_ALU0_I
+@[64] 31 tag: unit:EX SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B result:00000010
+@[64] 31 tag: unit:EX.IBR SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B mispred:1 tkn:1 tru_tgt:10 pcnxt:c 
+@[66] 32 tag: unit:RF op:read addr: 1 data:00000020
+@[66] 32 tag: unit:IC type:fb_ic_req_nnn id:0 addr:0000000000000050
+@[66] 32 tag: type:fe_fb_req id:0 addr:0000000000000018
+@[66] 32 tag: type:pf_fb_req addr:0000000000000054
+@[66] 32 tag: type:fb_fe_rsp id:0 data:10c0b3
+@[66] 32 tag: unit:RD SIMID:00000004,0000000000000010 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[66] 32 tag: unit:DE SIMID:00000005,0000000000000014 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0
+@[66] 32 tag: unit:MM SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B
+@[66] 32 tag: unit:FE pc:0000000000000014 SIMID:00000005,0000000000000014 opcode:RV_OP_ALU0_R
+@[66] 32 tag: unit:FE pc:0000000000000018 SIMID:00000005,0000000000000014 opcode:RV_OP_ALU0_R
+@[66] 32 tag: unit:EX SIMID:00000003,000000000000000c opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x0 rs1:x0 imm64:0x42 funct3:0 result:00000042
+@[66] 32 tag: unit:EX.IALU SIMID:00000003,000000000000000c opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x0 rs1:x0 imm64:0x42 funct3:0 result:00000042
+@[68] 33 tag: type:pf_fb_req addr:0000000000000058
+@[68] 33 tag: type:fb_fe_rsp id:0 data:214133
+@[68] 33 tag: unit:RD SIMID:00000005,0000000000000014 opcode:RV_OP_ALU0_R uop:U_XOR ifmt:RV_FMT_R rd:x1 rs1:x1 rs2:x1 funct3:4 funct7:0
+@[68] 33 tag: unit:MM SIMID:00000003,000000000000000c opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x0 rs1:x0 imm64:0x42 funct3:0
+@[68] 33 tag: unit:EX SIMID:00000004,0000000000000010 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0 result:00000040
+@[68] 33 tag: unit:EX.IALU SIMID:00000004,0000000000000010 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0 result:00000040
+@[68] 33 tag: unit:RB SIMID:00000002,0000000000000008 opcode:RV_OP_BR uop:U_BR ifmt:RV_FMT_B result:00000010
+@[68] 33 tag: -------------------------------------
+@[68] 33 tag: PC:00000008 RV_OP_BR -> U_BR
+@[68] 33 tag: src1: reg,x0  0x0               
+@[68] 33 tag: src2: reg,x1  0x20              
+@[68] 33 tag: rslt: UNDEF
+@[70] 34 tag: type:fe_fb_req id:0 addr:000000000000001c
+@[72] 35 tag: type:fe_fb_req id:0 addr:0000000000000010
+@[72] 35 tag: type:pf_fb_req addr:000000000000005c
+@[72] 35 tag: type:fb_fe_rsp id:0 data:31c1b3
+@[74] 36 tag: type:fe_fb_req id:0 addr:0000000000000014
+@[74] 36 tag: type:pf_fb_req addr:0000000000000050
+@[74] 36 tag: type:fb_fe_rsp id:0 data:2008093
+@[74] 36 tag: unit:DE SIMID:00000006,0000000000000010 opcode:RV_OP_ALU0_I uop:U_ADD ifmt:RV_FMT_I rd:x1 rs1:x1 imm64:0x20 funct3:0
+@[74] 36 tag: unit:FE pc:0000000000000010 SIMID:00000006,0000000000000010 opcode:RV_OP_ALU0_I
+@[74] 36 tag: unit:FE pc:0000000000000014 SIMID:00000006,0000000000000010 opcode:RV_OP_ALU0_I
