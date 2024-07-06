@@ -7,33 +7,56 @@ import argparse
 import pprint as pp
 import yaml
 import typing
+from dataclasses import dataclass
 import re
+from functools import cache
 
-#from libreed.helpers import banner,text_to_n_rows,do_cmd
+@dataclass
+class MatchGroup:
+    group: str
+    regex: str
 
-def parse_config(cfg_file: typing.IO) -> dict:
+    def __hash__(self):
+        return hash((self.group, self.regex))
+
+    @property
+    @cache
+    def recmp(self) -> typing.Any:
+        return re.compile(self.regex)
+
+def parse_config(cfg_file: typing.IO) -> list[MatchGroup]:
     """Parse a YAML centrifuge config file and return the dict"""
     d = yaml.safe_load(cfg_file)
+    matgroups = []
 
     # Compile regexes for performance
     for mat in d['matches']:
-        mat['recmp'] = re.compile(mat['regex'])
+        matgroups.append(MatchGroup(**mat))
 
-    return d
+    return matgroups
 
-def spin_it(cfg: dict, fn_log: str) -> dict:
-    """Given the config dict and a log file, spin out to its contstituent parts"""
+def find_first_match(args: typing.Any, matgroups: list[MatchGroup], line: str) -> MatchGroup:
+    try:
+        first_match = next((mg for mg in matgroups if mg.recmp.search(line)))
+        return first_match
+    except StopIteration as e:
+        if args.strict:
+            print(f"Could not find group matching {line}")
+            raise(e)
+        else:
+            return MatchGroup(args.default_group, r'')
+
+def spin_it(args: typing.Any, matgroups: list[MatchGroup], fn_log: str) -> dict:
+    """Given the match groups and a log file, spin out to its contstituent parts"""
     # matches:
     # - match: '^@\[(\d+)\] .*unit:IC'
     #     group: 'IC'
 
-    cfg_matches = cfg['matches']
-
-    groups = {}
+    groups: dict[str, dict] = {}
     with open(fn_log, 'r') as fh_log:
         for line in fh_log:
-            first_match = next((mat for mat in cfg_matches if mat['recmp'].search(line)))
-            group = first_match['group']
+            first_match = find_first_match(args, matgroups, line)
+            group = first_match.group
             if group not in groups:
                 groups[group] = { 'lines':[] }
             groups[group]['lines'].append(line)
@@ -54,8 +77,8 @@ def make_filename_from_group(fn_log: str, groupname: str) -> str:
 def main(args):
     """Main function"""
 
-    cfg    = parse_config(args.config)
-    groups = spin_it(cfg, args.logfile)
+    matgroups = parse_config(args.config)
+    groups = spin_it(args, matgroups, args.logfile)
 
     for group,grpdict in groups.items():
         new_log = make_filename_from_group(args.logfile, group)
@@ -69,5 +92,7 @@ if __name__=='__main__':
     argparser.add_argument('config', type=argparse.FileType('rb'), help='YAML config file')
     # logfile is a str b/c we need to do string manip on filename
     argparser.add_argument('logfile', type=str, help='Log file to split')
+    argparser.add_argument('-s', '--strict', default=False, action='store_true', help='Strict mode (default: no catch-all default group)')
+    argparser.add_argument('-d', '--default-group', type=str, default='OTHER', help='Catch-all group name (ignored in strict mode)')
     argparse_args = argparser.parse_args()
     main(argparse_args)
