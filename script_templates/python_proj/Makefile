@@ -1,4 +1,4 @@
-HOST_PYTHON3=/usr/bin/python3
+HOST_PYTHON3=$(shell which python3)
 VENV_BIN=venv/bin/
 VENV_PYTHON3=${VENV_BIN}/python3
 
@@ -12,10 +12,10 @@ init:
 	venv/bin/pip install -r requirements.txt
 
 test:
-	${VENV_BIN}/pytest .
+	PYTHONPATH=${PWD} ${VENV_BIN}/pytest .
 
 mypy:
-	${VENV_BIN}/mypy .
+	PYTHONPATH=${PWD} ${VENV_BIN}/mypy . --explicit-package-bases
 
 lint:
 	echo ${PYTHONPATH}

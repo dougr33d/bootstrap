@@ -1,5 +1,5 @@
 """Multiplier test cases"""
-from ..proj.helpers import multiplier
+from proj.helpers import multiplier
 
 def test_mulitplier_easy():
     """Test multiplier (easy)"""
