@@ -28,6 +28,23 @@ def render(thing: str, nrows: int, ncols: int) -> str:
 
     return "\n".join(lines)
 
+def render_things(things: list) -> str:
+    """Given a list of things, render all things into one big text blob"""
+    txt_blobs = []
+
+    term_size = shutil.get_terminal_size()
+    tot_rows  = term_size.lines - 1
+    tot_cols  = term_size.columns
+
+    rows_per_thing = tot_rows // len(things)
+    for nth,thing in enumerate(things):
+        nrows = rows_per_thing
+        if nth == len(things)-1:
+            # get the excess
+            nrows = rows_per_thing + (tot_rows % rows_per_thing)
+        txt_blobs.append(render(thing, nrows, tot_cols))
+    return "\n".join(txt_blobs)
+
 def main():
     """Main function"""
 
@@ -35,17 +52,7 @@ def main():
     argparser.add_argument('things', type=str, nargs='+', help='Commands or files to watch (prepend commands with @)')
     args = argparser.parse_args()
 
-    term_size = shutil.get_terminal_size()
-    tot_rows  = term_size.lines - 1
-    tot_cols  = term_size.columns
-
-    rows_per_thing = tot_rows // len(args.things)
-    for nth,thing in enumerate(args.things):
-        nrows = rows_per_thing
-        if nth == len(args.things)-1:
-            # get the excess
-            nrows = rows_per_thing + (tot_rows % rows_per_thing)
-        print(render(thing, nrows, tot_cols))
+    print(render_things(args.things))
 
 if __name__=='__main__':
     main()
