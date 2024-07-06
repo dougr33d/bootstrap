@@ -1,3 +1,5 @@
 alias up="cd .."
 alias here='pwd > ~/.here'
 alias there='cd `cat ~/.here`'
+alias oneapi_init='. /opt/intel/oneapi/setvars.sh ; . /opt/intel/oneapi/2024.2/oneapi-vars.sh'
+
