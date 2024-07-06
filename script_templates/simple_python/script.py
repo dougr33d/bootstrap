@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 
-def main(args):
-    prod = args.number * args.multiplier
-    print(f'{args.number} * {args.multiplier} = {prod}')
+"""This is a script that does a thing."""
 
-if __name__=='__main__':
+logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(levelname)s - %(message)s', level=logging.INFO)
+
+def main():
     argparser = argparse.ArgumentParser(description='My cool new script')
     argparser.add_argument('-m', '--multiplier', type=int, default=2, help='Multiplier (default: 2)')
     argparser.add_argument('number', type=int, help='Number to double')
     args = argparser.parse_args()
-    main(args)
+
+    prod = args.number * args.multiplier
+    print(f'{args.number} * {args.multiplier} = {prod}')
+
+if __name__=='__main__':
+    main()

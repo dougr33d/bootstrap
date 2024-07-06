@@ -85,8 +85,19 @@ def make_filename_from_group(fn_log: str, groupname: str) -> str:
         return re.sub(r'\.', f".{groupname}.", fn_log, count=1)
     return f"{fn_log}.{groupname}"
 
-def main(args):
+def main():
     """Main function"""
+
+    argparser = argparse.ArgumentParser(description='Split a single log file into N separate log files')
+    argparser.add_argument('config', type=argparse.FileType('rb'), help='YAML config file')
+    argparser.add_argument('logfile', type=str, help='Log file to split') # logfile is a str b/c we need to do string manip on filename
+    argparser.add_argument('-s', '--strict', default=False, action='store_true', help='Strict mode (default: no catch-all default group)')
+    argparser.add_argument('-d', '--default-group', type=str, default='OTHER', help='Catch-all group name (ignored in strict mode)')
+    argparser.add_argument('-v', '--verbose', default=False, action='store_true', help='Verbose output')
+    args = argparser.parse_args()
+
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
 
     matgroups = parse_config(args.config, args.strict, args.default_group)
     groups = spin_it(matgroups, args.logfile)
@@ -99,15 +110,4 @@ def main(args):
             logger.info(f"Wrote {nlines:4d} line(s) to {new_log}")
 
 if __name__=='__main__':
-    argparser = argparse.ArgumentParser(description='Split a single log file into N separate log files')
-    argparser.add_argument('config', type=argparse.FileType('rb'), help='YAML config file')
-    argparser.add_argument('logfile', type=str, help='Log file to split') # logfile is a str b/c we need to do string manip on filename
-    argparser.add_argument('-s', '--strict', default=False, action='store_true', help='Strict mode (default: no catch-all default group)')
-    argparser.add_argument('-d', '--default-group', type=str, default='OTHER', help='Catch-all group name (ignored in strict mode)')
-    argparser.add_argument('-v', '--verbose', default=False, action='store_true', help='Verbose output')
-    argparse_args = argparser.parse_args()
-
-    if argparse_args.verbose:
-        logger.setLevel(logging.DEBUG)
-
-    main(argparse_args)
+    main()
