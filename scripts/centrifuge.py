@@ -1,27 +1,31 @@
 #!/bin/sh
 "exec" "$(dirname $(readlink -f $0))/venv/bin/python3" "$0" "$@"
 
-"""centrifuge is a script that splits a single log file into separate log files based on a config file."""
-
 import argparse
-import pprint as pp
-import yaml
+#import pprint as pp
 import typing
 from dataclasses import dataclass
 import re
-from functools import cache
+from functools import lru_cache
+
+import yaml
+
+"""centrifuge is a script that splits a single log file into separate log files based on a config file."""
 
 @dataclass
 class MatchGroup:
+    """MatchGroup is a class that encapsulates match info from the centrifuge config."""
     group: str
     regex: str
 
     def __hash__(self):
+        """Make the class hashable"""
         return hash((self.group, self.regex))
 
     @property
-    @cache
+    @lru_cache(maxsize=128)
     def recmp(self) -> typing.Any:
+        """Cached property to return compiled regex"""
         return re.compile(self.regex)
 
 def parse_config(cfg_file: typing.IO) -> list[MatchGroup]:
@@ -36,15 +40,15 @@ def parse_config(cfg_file: typing.IO) -> list[MatchGroup]:
     return matgroups
 
 def find_first_match(args: typing.Any, matgroups: list[MatchGroup], line: str) -> MatchGroup:
+    """Find and return the first matching matchgroup."""
     try:
         first_match = next((mg for mg in matgroups if mg.recmp.search(line)))
         return first_match
     except StopIteration as e:
         if args.strict:
             print(f"Could not find group matching {line}")
-            raise(e)
-        else:
-            return MatchGroup(args.default_group, r'')
+            raise e
+        return MatchGroup(args.default_group, r'')
 
 def spin_it(args: typing.Any, matgroups: list[MatchGroup], fn_log: str) -> dict:
     """Given the match groups and a log file, spin out to its contstituent parts"""
@@ -53,7 +57,7 @@ def spin_it(args: typing.Any, matgroups: list[MatchGroup], fn_log: str) -> dict:
     #     group: 'IC'
 
     groups: dict[str, dict] = {}
-    with open(fn_log, 'r') as fh_log:
+    with open(fn_log, 'r', encoding='utf-8') as fh_log:
         for line in fh_log:
             first_match = find_first_match(args, matgroups, line)
             group = first_match.group
@@ -71,8 +75,7 @@ def make_filename_from_group(fn_log: str, groupname: str) -> str:
 
     if '.' in fn_log:
         return re.sub(r'\.', f".{groupname}.", fn_log, count=1)
-    else:
-        return f"{fn_log}.{groupname}"
+    return f"{fn_log}.{groupname}"
 
 def main(args):
     """Main function"""
@@ -82,10 +85,8 @@ def main(args):
 
     for group,grpdict in groups.items():
         new_log = make_filename_from_group(args.logfile, group)
-        with open(new_log, 'w') as fh_new:
+        with open(new_log, 'w', encoding='utf-8') as fh_new:
             fh_new.writelines(grpdict['lines'])
-
-
 
 if __name__=='__main__':
     argparser = argparse.ArgumentParser(description='Split a single log file into N separate log files')
