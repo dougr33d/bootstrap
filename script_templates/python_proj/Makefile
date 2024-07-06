@@ -14,7 +14,7 @@ init:
 test:
 	${VENV_BIN}/pytest .
 
-mpypy:
+mypy:
 	${VENV_BIN}/mypy .
 
 lint:

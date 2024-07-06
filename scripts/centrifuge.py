@@ -7,10 +7,15 @@ import typing
 from dataclasses import dataclass
 import re
 from functools import lru_cache
+import logging
+import sys
 
 import yaml
 
 """centrifuge is a script that splits a single log file into separate log files based on a config file."""
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(levelname)s - %(message)s', level=logging.INFO)
 
 @dataclass
 class MatchGroup:
@@ -28,8 +33,11 @@ class MatchGroup:
         """Cached property to return compiled regex"""
         return re.compile(self.regex)
 
-def parse_config(cfg_file: typing.IO) -> list[MatchGroup]:
+def parse_config(cfg_file: typing.IO, strict: bool = False, dflt_group: str = 'MISC') -> list[MatchGroup]:
     """Parse a YAML centrifuge config file and return the dict"""
+
+    logger.debug(f"Parsing config stream {cfg_file}")
+
     d = yaml.safe_load(cfg_file)
     matgroups = []
 
@@ -37,20 +45,22 @@ def parse_config(cfg_file: typing.IO) -> list[MatchGroup]:
     for mat in d['matches']:
         matgroups.append(MatchGroup(**mat))
 
+    if not strict:
+        matgroups.append(MatchGroup(dflt_group, r''))
+
     return matgroups
 
-def find_first_match(args: typing.Any, matgroups: list[MatchGroup], line: str) -> MatchGroup:
+def find_first_match(matgroups: list[MatchGroup], line: str) -> MatchGroup:
     """Find and return the first matching matchgroup."""
     try:
         first_match = next((mg for mg in matgroups if mg.recmp.search(line)))
         return first_match
-    except StopIteration as e:
-        if args.strict:
-            print(f"Could not find group matching {line}")
-            raise e
-        return MatchGroup(args.default_group, r'')
+    except StopIteration:
+        logger.error(f"Could not find group matching '{line.strip()}'...")
+        logger.error("consider running without --strict, or add a catch-all group")
+        sys.exit(-1)
 
-def spin_it(args: typing.Any, matgroups: list[MatchGroup], fn_log: str) -> dict:
+def spin_it(matgroups: list[MatchGroup], fn_log: str) -> dict:
     """Given the match groups and a log file, spin out to its contstituent parts"""
     # matches:
     # - match: '^@\[(\d+)\] .*unit:IC'
@@ -58,8 +68,9 @@ def spin_it(args: typing.Any, matgroups: list[MatchGroup], fn_log: str) -> dict:
 
     groups: dict[str, dict] = {}
     with open(fn_log, 'r', encoding='utf-8') as fh_log:
+        logger.debug(f"Reading {fn_log}")
         for line in fh_log:
-            first_match = find_first_match(args, matgroups, line)
+            first_match = find_first_match(matgroups, line)
             group = first_match.group
             if group not in groups:
                 groups[group] = { 'lines':[] }
@@ -80,13 +91,15 @@ def make_filename_from_group(fn_log: str, groupname: str) -> str:
 def main(args):
     """Main function"""
 
-    matgroups = parse_config(args.config)
-    groups = spin_it(args, matgroups, args.logfile)
+    matgroups = parse_config(args.config, args.strict, args.default_group)
+    groups = spin_it(matgroups, args.logfile)
 
     for group,grpdict in groups.items():
         new_log = make_filename_from_group(args.logfile, group)
         with open(new_log, 'w', encoding='utf-8') as fh_new:
             fh_new.writelines(grpdict['lines'])
+            nlines = len(grpdict['lines'])
+            logger.info(f"Wrote {nlines:4d} line(s) to {new_log}")
 
 if __name__=='__main__':
     argparser = argparse.ArgumentParser(description='Split a single log file into N separate log files')
@@ -95,5 +108,10 @@ if __name__=='__main__':
     argparser.add_argument('logfile', type=str, help='Log file to split')
     argparser.add_argument('-s', '--strict', default=False, action='store_true', help='Strict mode (default: no catch-all default group)')
     argparser.add_argument('-d', '--default-group', type=str, default='OTHER', help='Catch-all group name (ignored in strict mode)')
+    argparser.add_argument('-v', '--verbose', default=False, action='store_true', help='Verbose output')
     argparse_args = argparser.parse_args()
+
+    if argparse_args.verbose:
+        logger.setLevel(logging.DEBUG)
+
     main(argparse_args)

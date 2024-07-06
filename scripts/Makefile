@@ -12,10 +12,10 @@ init:
 	venv/bin/pip install -r requirements.txt
 
 test:
-	${VENV_BIN}/pytest .
+	PYTHONPATH=${PWD} ${VENV_BIN}/pytest .
 
-mpypy:
-	${VENV_BIN}/mypy .
+mypy:
+	PYTHONPATH=${PWD} ${VENV_BIN}/mypy . --explicit-package-bases
 
 lint:
 	echo ${PYTHONPATH}

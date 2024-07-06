@@ -1,5 +1,5 @@
-"""Multiplier test cases"""
-from ..libreed.helpers import banner
+"""Helper test cases"""
+from libreed.helpers import banner
 
 def test_banner():
     """Test banner"""
