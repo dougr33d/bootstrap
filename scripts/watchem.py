@@ -4,8 +4,12 @@
 import argparse
 #import pprint as pp
 import shutil
+import logging
 
 from libreed.helpers import banner,text_to_n_rows,do_cmd
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(levelname)s - %(message)s', level=logging.INFO)
 
 def render(thing: str, nrows: int, ncols: int) -> str:
     """Render a thing (command or file) for n rows"""
