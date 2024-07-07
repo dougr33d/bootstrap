@@ -1,5 +1,6 @@
-#!/bin/sh
-"exec" "$(dirname $(readlink -f $0))/venv/bin/python3" "$0" "$@"
+#!/bin/env python3.12
+
+"""centrifuge is a script that splits a single log file into separate log files based on a config file."""
 
 import argparse
 #import pprint as pp
@@ -11,8 +12,6 @@ import logging
 import sys
 
 import yaml
-
-"""centrifuge is a script that splits a single log file into separate log files based on a config file."""
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(levelname)s - %(message)s', level=logging.INFO)
@@ -81,6 +80,7 @@ def make_filename_from_group(fn_log: str, groupname: str) -> str:
     Add '.groupname' before the first dot; if no dots are in the filename, add '.groupname' to the end of the filename.
     """
 
+    assert "/" not in fn_log
     if '.' in fn_log:
         return re.sub(r'\.', f".{groupname}.", fn_log, count=1)
     return f"{fn_log}.{groupname}"
@@ -103,7 +103,8 @@ def main():
     groups = spin_it(matgroups, args.logfile)
 
     for group,grpdict in groups.items():
-        new_log = make_filename_from_group(args.logfile, group)
+        fn_log = args.logfile.split("/")[-1]
+        new_log = make_filename_from_group(fn_log, group)
         with open(new_log, 'w', encoding='utf-8') as fh_new:
             fh_new.writelines(grpdict['lines'])
             nlines = len(grpdict['lines'])

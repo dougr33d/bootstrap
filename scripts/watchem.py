@@ -1,5 +1,6 @@
-#!/bin/sh
-"exec" "$(dirname $(readlink -f $0))/venv/bin/python3" "$0" "$@"
+#!/bin/env python3.12
+
+"""Watchem is a helper script to help you watch multiple files."""
 
 import argparse
 #import pprint as pp
@@ -7,8 +8,6 @@ import shutil
 import logging
 
 from libreed.helpers import banner,text_to_n_rows,do_cmd
-
-"""Watchem is a helper script to help you watch multiple files."""
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='%(levelname)s - %(message)s', level=logging.INFO)
