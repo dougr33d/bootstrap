@@ -1,4 +1,5 @@
 #pyyaml
 #types-PyYAML
+pylint
 pytest
 mypy
