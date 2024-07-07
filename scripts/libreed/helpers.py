@@ -18,8 +18,8 @@ def banner(text: str, width: int, banner_char: str = '#') -> str:
 def text_to_n_rows(text: str, num_rows: int, blank_line_filler: str = '~') -> str:
     """Given a multiline string, truncate or pad it to num_rows rows."""
     lines = text.split('\n')
-    if len(lines) > num_rows-1:
-        lines = lines[-1*(num_rows-1):]
+    if len(lines) > num_rows:
+        lines = lines[-1*num_rows:]
     if len(lines) < num_rows:
         lines.extend([blank_line_filler] * (num_rows - len(lines)))
     assert len(lines) == num_rows
