@@ -1,8 +1,8 @@
 #!/bin/env python3.12
 
+import argparse
 """centrifuge is a script that splits a single log file into separate log files based on a config file."""
 
-import argparse
 #import pprint as pp
 import typing
 from dataclasses import dataclass

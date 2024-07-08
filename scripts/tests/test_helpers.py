@@ -12,7 +12,7 @@ def test_text_to_n_rows_trunc():
     lines = [f"row {i}" for i in range(10)]
     num_rows = 3
     full_text = "\n".join(lines)
-    expected = "\n".join([f"row  {i}" for i in range(7,10)])
+    expected = "\n".join([f"row {i}" for i in range(7,10)])
     actual = text_to_n_rows(text=full_text, num_rows=num_rows, blank_line_filler='#')
     assert expected == actual
 
