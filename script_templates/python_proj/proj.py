@@ -1,5 +1,8 @@
-#!/bin/sh
-"exec" "$(dirname $(readlink -f $0))/venv/bin/python3" "$0" "$@"
+#!/usr/bin/env python3.12
+
+"""This is a script.
+
+There are many like it, but this one is mine."""
 
 import argparse
 import logging

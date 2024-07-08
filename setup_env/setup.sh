@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+TWD=$(git rev-parse --show-toplevel)
+
 ####
 # TMUX setup
 
@@ -21,10 +23,13 @@ if grep -q "Begin bootstrap" ~/.bashrc; then
     echo "skipping (found Begin/End bootstrap sections in bashrc)"
 else
     echo "Setting up aliases"
-    echo "### Begin bootstrap" >> ~/.bashrc
-    echo ". $PWD/bash/aliases" >> ~/.bashrc
-    echo ". $PWD/bash/scripts" >> ~/.bashrc
-    echo "### End bootstrap"   >> ~/.bashrc
+    echo ""                                    >> ~/.bashrc
+    echo "### Begin bootstrap"                 >> ~/.bashrc
+    echo ". $PWD/bash/aliases"                 >> ~/.bashrc
+    echo ". $PWD/bash/scripts"                 >> ~/.bashrc
+    echo "export PATH=\$PATH:$TWD/scripts/bin" >> ~/.bashrc
+    echo "### End bootstrap"                   >> ~/.bashrc
+    echo ""                                    >> ~/.bashrc
 fi
 
 ####

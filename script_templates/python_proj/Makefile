@@ -20,10 +20,19 @@ ${PYTHON_SENTINEL}: requirements.txt
 	@touch ${PYTHON_SENTINEL}
 
 test:
-	PYTHONPATH=${PWD} ${VENV_BIN}/pytest .
+	@echo
+	@echo "##### PYTEST ################"
+	@echo
+	@PYTHONPATH=${PWD} ${VENV_BIN}/pytest .
 
 mypy:
-	PYTHONPATH=${PWD} ${VENV_BIN}/mypy . --explicit-package-bases
+	@echo
+	@echo "##### MYPY ##################"
+	@echo
+	@PYTHONPATH=${PWD} ${VENV_BIN}/mypy . --explicit-package-bases
 
 lint:
-	PYTHONPATH=${PWD} ${VENV_BIN}/pylint .
+	@echo
+	@echo "##### LINT ##################"
+	@echo
+	@PYTHONPATH=${PWD} ${VENV_BIN}/pylint .
