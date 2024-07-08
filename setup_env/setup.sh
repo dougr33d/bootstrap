@@ -77,3 +77,24 @@ else
         ln -s $PWD/xfce/xfce4-keyboard-shortcuts.xml $XFKBD_XML
     fi
 fi
+
+####
+# Search for all required tools
+
+TOOLS="code nvim git gh mosh python3.12"
+
+echo
+echo "Looking for all required tools ($TOOLS)..."
+
+NOT_FOUND_COUNT=0
+for tool in ${TOOLS[@]}; do
+    if ! command -v "$tool" >& /dev/null; then
+        echo "-> did NOT find $tool"
+        NOT_FOUND_COUNT=$(($NOT_FOUND_COUNT+1))
+    fi
+done
+if [[ $NOT_FOUND_COUNT -gt 0 ]]; then
+    echo "Missing $NOT_FOUND_COUNT tool(s)"
+else
+    echo "All required tools found."
+fi
