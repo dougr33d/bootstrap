@@ -1,5 +1,9 @@
 #!/usr/bin/env python3.12
 
+"""This is a script.
+
+There are many like it, but this one is mine."""
+
 import argparse
 import logging
 from proj import helpers
