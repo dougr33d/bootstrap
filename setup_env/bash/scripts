@@ -15,11 +15,25 @@ dobis(){
                 draft="--draft"
                 ;;
             *)
-                other_args+=("$1");
+                if [[ -z "$title" ]]; then
+                    title="$1"
+                else
+                    other_args+=("$1");
+                fi
                 ;;
         esac
         shift
     done
+    
+    if [[ ${#other_args} -gt 0 ]]; then
+        echo "Unknown args ${other_args[@]}"
+        return
+    fi
 
-    echo gh pr create --assignee "@me" --title "$1" --fill "$draft"
+
+    if [[ ! -z $draft ]]; then
+        gh pr create --assignee "@me" --title "$title" --fill --draft
+    else
+        gh pr create --assignee "@me" --title "$title" --fill
+    fi
 }
