@@ -2,7 +2,7 @@ name: Python checks
 run-name: ${{ github.actor }} Python checks
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Python-Checks:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
