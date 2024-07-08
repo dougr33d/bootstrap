@@ -1,5 +1,4 @@
-#!/bin/sh
-"exec" "$(dirname $(readlink -f $0))/venv/bin/python3" "$0" "$@"
+#!/usr/bin/env python3.12
 
 import argparse
 import logging
