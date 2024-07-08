@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 TWD=$(git rev-parse --show-toplevel)
 
@@ -25,6 +25,7 @@ else
     echo "Setting up aliases"
     echo ""                                    >> ~/.bashrc
     echo "### Begin bootstrap"                 >> ~/.bashrc
+    echo ". $PWD/bash/vars"                    >> ~/.bashrc
     echo ". $PWD/bash/aliases"                 >> ~/.bashrc
     echo ". $PWD/bash/scripts"                 >> ~/.bashrc
     echo "export PATH=\$PATH:$TWD/scripts/bin" >> ~/.bashrc
@@ -61,14 +62,18 @@ fi
 echo
 echo "Setting up xfce..."
 
-XFKBD_XML=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-if [ -L $XFKBD_XML ]; then
-    echo "skipping link (${XFKBD_XML} is already a symlink)"
+if [[ $(uname) =~ Darwin ]]; then
+    echo "skipping XFCE setup (Darwin detected)"
 else
-    echo "linking xfce4 keyboard shortcuts"
-    if [ -e $XFKBD_XML ]; then
-        cp $XFKBD_XML{,.bak}
+    XFKBD_XML=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+    if [ -L $XFKBD_XML ]; then
+        echo "skipping link (${XFKBD_XML} is already a symlink)"
+    else
+        echo "linking xfce4 keyboard shortcuts"
+        if [ -e $XFKBD_XML ]; then
+            cp $XFKBD_XML{,.bak}
+        fi
+        ln -s $PWD/xfce/xfce4-keyboard-shortcuts.xml $XFKBD_XML
     fi
-    ln -s $PWD/xfce/xfce4-keyboard-shortcuts.xml $XFKBD_XML
 fi
 

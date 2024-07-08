@@ -1,3 +1,25 @@
+#!/usr/bin/env bash
+
 cdmkdir(){
     mkdir -p $1 && cd $1
+}
+
+dobis(){
+    local title=""
+    local draft=""
+    local other_args=()
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -d|--draft)
+                draft="--draft"
+                ;;
+            *)
+                other_args+=("$1");
+                ;;
+        esac
+        shift
+    done
+
+    echo gh pr create --assignee "@me" --title "$1" --fill "$draft"
 }
