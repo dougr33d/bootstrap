@@ -22,15 +22,16 @@ echo "Setting up bash..."
 if grep -q "Begin bootstrap" ~/.bashrc; then
     echo "skipping (found Begin/End bootstrap sections in bashrc)"
 else
-    echo "Setting up aliases"
     echo ""                                    >> ~/.bashrc
     echo "### Begin bootstrap"                 >> ~/.bashrc
-    echo ". $PWD/bash/vars"                    >> ~/.bashrc
-    echo ". $PWD/bash/aliases"                 >> ~/.bashrc
-    echo ". $PWD/bash/scripts"                 >> ~/.bashrc
+    BASH_FILES=$(ls $PWD/bash/*)
+    for file in ${BASH_FILES[@]}; do
+        fn_base=$(basename "$file")
+        echo "...linking ${fn_base}"
+        echo ". ${file}"                       >> ~/.bashrc
+    done
     echo "export PATH=\$PATH:$TWD/scripts/bin" >> ~/.bashrc
     echo "### End bootstrap"                   >> ~/.bashrc
-    echo ""                                    >> ~/.bashrc
 fi
 
 ####
@@ -76,4 +77,3 @@ else
         ln -s $PWD/xfce/xfce4-keyboard-shortcuts.xml $XFKBD_XML
     fi
 fi
-
