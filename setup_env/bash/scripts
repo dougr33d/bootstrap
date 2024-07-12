@@ -1,8 +1,83 @@
 #!/usr/bin/env bash
 
+############################
+# Miscellanea
+
 cdmkdir(){
     mkdir -p $1 && cd $1
 }
+
+############################
+# File system navigation
+
+dir_maybe_addzero(){
+   local dirname="$1"
+
+   if [[ ! "$dirname" =~ \.([0-9]+)$ ]]; then
+      echo "$dirname.0"
+   else
+      echo "$dirname"
+   fi
+}
+
+dir_maybe_delzero(){
+   local dirname="$1"
+
+   if [[ "$dirname" =~ \.0$ ]]; then
+      echo "$dirname" | sed -e 's/\.0$//'
+   else
+      echo "$dirname"
+   fi
+}
+
+dir_incr_suffix(){
+   local dirname="$1"
+   local incr_by_n="$2"
+
+   dirname=$(dir_maybe_addzero $dirname)
+   if [[ $dirname =~ \.([0-9]+)$ ]]; then
+      local this_ndx=${BASH_REMATCH[1]}
+      local next_ndx=$(($this_ndx + $incr_by_n))
+      local stripped=$(echo $dirname | sed -e 's/\.[0-9]\+$//')
+      local nextdir="${stripped}.${next_ndx}"
+      nextdir=$(dir_maybe_delzero $nextdir)
+      echo "${nextdir}"
+   else
+      echo "ERROR!"
+      exit -1
+   fi
+}
+
+next(){ 
+   cd $(dir_incr_suffix "$PWD"  1) 
+}
+
+prev(){ 
+   cd $(dir_incr_suffix "$PWD" -1) 
+}
+
+last(){ 
+   dirname="$PWD"
+   prev="$PWD"
+   while [[ -d $dirname ]]; do
+      prev=$dirname
+      dirname=$(dir_incr_suffix $dirname 1)
+   done
+   cd "$prev"
+}
+
+first(){ 
+   dirname="$PWD"
+   prev="$PWD"
+   while [[ -d $dirname ]]; do
+      prev=$dirname
+      dirname=$(dir_incr_suffix $dirname -1)
+   done
+   cd "$prev"
+}
+
+############################
+# tools support
 
 dobis(){
     local title=""
@@ -37,3 +112,4 @@ dobis(){
         gh pr create --assignee "@me" --title "$title" --fill
     fi
 }
+

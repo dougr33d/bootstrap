@@ -19,19 +19,21 @@ fi
 echo
 echo "Setting up bash..."
 
-if grep -q "Begin bootstrap" ~/.bashrc; then
+BASHRC="$HOME/.bashrc.dreed"
+
+if grep -q "Begin bootstrap" $BASHRC; then
     echo "skipping (found Begin/End bootstrap sections in bashrc)"
 else
-    echo ""                                    >> ~/.bashrc
-    echo "### Begin bootstrap"                 >> ~/.bashrc
+    echo ""                                    >> $BASHRC
+    echo "### Begin bootstrap"                 >> $BASHRC
     BASH_FILES=$(ls $PWD/bash/*)
     for file in ${BASH_FILES[@]}; do
         fn_base=$(basename "$file")
         echo "...linking ${fn_base}"
-        echo ". ${file}"                       >> ~/.bashrc
+        echo ". ${file}"                       >> $BASHRC
     done
-    echo "export PATH=\$PATH:$TWD/scripts/bin" >> ~/.bashrc
-    echo "### End bootstrap"                   >> ~/.bashrc
+    echo "export PATH=\$PATH:$TWD/scripts/bin" >> $BASHRC
+    echo "### End bootstrap"                   >> $BASHRC
 fi
 
 ####
@@ -40,11 +42,13 @@ fi
 echo
 echo "Setting up vim..."
 
-if [ -d ~/.vim/bundle/Vundle.vim ]; then
-    echo "skipping Vundle clone (already exists)"
+PLUGDIR=$HOME/.vim/autoload/plug.vim
+
+if [ -d $PLUGDIR ]; then
+    echo "skipping vim-plug clone (already exists)"
 else
-    echo "cloning vundle"
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    echo "cloning vim-plug"
+    curl -fLo $PLUGDIR --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 if [ -f ~/.vimrc ]; then
@@ -54,7 +58,7 @@ else
     ln -s $PWD/vim/vimrc ~/.vimrc
 
     echo "installing plugins"
-    vim +PluginInstall +qall
+    vim +PlugInstall +qall
 fi
 
 ####
