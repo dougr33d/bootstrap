@@ -113,3 +113,8 @@ dobis(){
     fi
 }
 
+vig(){
+   local match="$1"
+   local matches=$(git status --porcelain | awk 'match($1,"M"){print $2}' | grep "$match")
+   vim ${matches[@]}
+}
