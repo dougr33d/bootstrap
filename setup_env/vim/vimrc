@@ -1,4 +1,3 @@
-
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
@@ -15,9 +14,12 @@ Plug 'tpope/vim-commentary'
 Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'preservim/nerdtree'
-" Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'ryanoasis/vim-devicons'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -90,6 +92,16 @@ augroup END
 let NERDTreeQuitOnOpen=1
 
 if executable('rg')
-   let g:ctrlp_user_command = 'rg %s --files --color=never --glob "" -u'
-   let g:ctrlp_use_caching = 1
+   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
 endif
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
+
+:silent let git_top_level_list=systemlist('git rev-parse --show-toplevel')
+:if len(git_top_level_list) > 0
+:  let git_top_level=git_top_level_list[0]
+:else
+:  let git_top_level='.'
+:endif
+:command! -bang PFiles call fzf#vim#files(git_top_level, <bang>0)
+
