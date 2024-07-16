@@ -58,6 +58,20 @@ else
     ln -s $PWD/vim/vimrc ~/.vimrc
 fi
 
+VIM_AFTER_PLUGIN_DIR=$HOME/.vim/after/plugin
+if [ ! -d $VIM_AFTER_PLUGIN_DIR ]; then
+   echo "Creating after plugin dir"
+   mkdir -p $VIM_AFTER_PLUGIN_DIR
+fi
+
+VIM_ABOLISH_FILE=${VIM_AFTER_PLUGIN_DIR}/abolish.vim
+if [ -e "${VIM_ABOLISH_FILE}" ]; then
+   echo "skipping vim-abolish (file already exists)"
+else
+   echo "linkingkipping vim-abolish file"
+   ln -s $PWD/vim/abolish.vim ${VIM_ABOLISH_FILE}
+fi
+
 echo "installing plugins"
 vim +PlugInstall +qall
 

@@ -4,15 +4,18 @@
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
+Plug 'airblade/vim-rooter'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ervandew/supertab'
+Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'pedrohdz/vim-yaml-folds'
+Plug 'rstacruz/vim-closer'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ervandew/supertab'
-Plug 'pedrohdz/vim-yaml-folds'
-Plug 'frazrepo/vim-rainbow'
-Plug 'tpope/vim-commentary'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'airblade/vim-rooter'
 
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -115,3 +118,9 @@ set autochdir
 " define a command which runs ripgrep in the root directory as determined by rooter
 command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case " . shellescape(<q-args>), 1, {"dir": FindRootDirectory()})
 command! -bang -nargs=* RG call fzf#vim#grep2("rg --column --line-number --no-heading --color=always --smart-case -- ", <q-args>, 1, {"dir": FindRootDirectory()})
+
+augroup rainbow_parens
+   autocmd!
+   autocmd FileType python,systemverilog,verilog RainbowParentheses
+augroup END
+
