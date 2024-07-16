@@ -12,6 +12,7 @@ Plug 'pedrohdz/vim-yaml-folds'
 Plug 'frazrepo/vim-rainbow'
 Plug 'tpope/vim-commentary'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'airblade/vim-rooter'
 
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -105,3 +106,12 @@ let g:ctrlp_clear_cache_on_exit = 0
 :endif
 :command! -bang PFiles call fzf#vim#files(git_top_level, <bang>0)
 
+" set autochdir and disable auto-vim-rooter
+"let g:rooter_use_lcd = 1
+let g:rooter_cd_cmd="lcd"
+let g:rooter_manual_only = 1
+set autochdir
+
+" define a command which runs ripgrep in the root directory as determined by rooter
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case " . shellescape(<q-args>), 1, {"dir": FindRootDirectory()})
+command! -bang -nargs=* RG call fzf#vim#grep2("rg --column --line-number --no-heading --color=always --smart-case -- ", <q-args>, 1, {"dir": FindRootDirectory()})

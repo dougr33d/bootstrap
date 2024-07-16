@@ -21,7 +21,7 @@ echo "Setting up bash..."
 
 BASHRC="$HOME/.bashrc.dreed"
 
-if grep -q "Begin bootstrap" $BASHRC; then
+if [[ -e $BASHRC ]] && grep -q "Begin bootstrap" $BASHRC; then
     echo "skipping (found Begin/End bootstrap sections in bashrc)"
 else
     echo ""                                    >> $BASHRC
@@ -56,10 +56,10 @@ if [ -f ~/.vimrc ]; then
 else
     echo "symlinking vimrc"
     ln -s $PWD/vim/vimrc ~/.vimrc
-
-    echo "installing plugins"
-    vim +PlugInstall +qall
 fi
+
+echo "installing plugins"
+vim +PlugInstall +qall
 
 ####
 # XFCE setup
@@ -76,7 +76,7 @@ else
     else
         echo "linking xfce4 keyboard shortcuts"
         if [ -e $XFKBD_XML ]; then
-            cp $XFKBD_XML{,.bak}
+            mv $XFKBD_XML{,.bak}
         fi
         ln -s $PWD/xfce/xfce4-keyboard-shortcuts.xml $XFKBD_XML
     fi
