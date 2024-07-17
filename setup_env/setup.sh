@@ -58,6 +58,9 @@ else
     ln -s $PWD/vim/vimrc ~/.vimrc
 fi
 
+echo "installing plugins"
+vim +PlugInstall +qall
+
 VIM_AFTER_PLUGIN_DIR=$HOME/.vim/after/plugin
 if [ ! -d $VIM_AFTER_PLUGIN_DIR ]; then
    echo "Creating after plugin dir"
@@ -71,9 +74,6 @@ else
    echo "linkingkipping vim-abolish file"
    ln -s $PWD/vim/abolish.vim ${VIM_ABOLISH_FILE}
 fi
-
-echo "installing plugins"
-vim +PlugInstall +qall
 
 ####
 # XFCE setup
