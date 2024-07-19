@@ -42,13 +42,13 @@ fi
 echo
 echo "Setting up vim..."
 
-PLUGDIR=$HOME/.vim/autoload/plug.vim
+VIMPLUG_DIR="$HOME/.vim/autoload/plug.vim"
 
-if [ -d $PLUGDIR ]; then
+if [ -d "$VIMPLUG_DIR" ]; then
     echo "skipping vim-plug clone (already exists)"
 else
     echo "cloning vim-plug"
-    curl -fLo $PLUGDIR --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    curl -fLo $VIMPLUG_DIR --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 if [ -f ~/.vimrc ]; then
