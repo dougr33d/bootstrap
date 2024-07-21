@@ -125,3 +125,4 @@ augroup rainbow_parens
    autocmd FileType python,systemverilog,verilog RainbowParentheses
 augroup END
 
+autocmd FileType systemverilog setlocal commentstring=\/\/\ %s
