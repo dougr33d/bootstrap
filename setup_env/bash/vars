@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export PS1='\[\e[32m\]\u@\h\[\e[0m\] \[\e[96m\]\w\[\e[0m\] \\$ '
+export PS1="\[\e[1m\]$PS1\[\e[0m\]"
 export TERM=xterm-256color
 export BASH_SILENCE_DEPRECATION_WARNING=1
 

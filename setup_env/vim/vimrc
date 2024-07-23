@@ -13,10 +13,12 @@ Plug 'justinmk/vim-sneak'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'rstacruz/vim-closer'
 Plug 'tpope/vim-commentary'
+
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'davidhalter/jedi-vim'
 
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
