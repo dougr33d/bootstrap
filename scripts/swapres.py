@@ -53,6 +53,7 @@ def change_to_rez(to_rez: str) -> None:
 
 
 def swap_res() -> None:
+    """Cycle to the next resolution"""
     all_rez = get_all_rezzes()
     val_rez = [r for r in all_rez if r in WHITELIST]
     this_rez = get_current_rez()
