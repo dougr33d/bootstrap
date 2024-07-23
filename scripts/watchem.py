@@ -21,6 +21,7 @@ def render(thing: str, nrows: int, ncols: int) -> str:
         rtn = do_cmd(thing[1:], check=False)
     else:
         rtn = do_cmd(f'tail -n {nrows} {thing}', check=False)
+    assert isinstance(rtn, str)
 
     lines.append(banner(thing,ncols))
     lines.append(text_to_n_rows(rtn, nrows-1))

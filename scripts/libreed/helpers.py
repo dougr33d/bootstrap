@@ -1,9 +1,12 @@
 """Helper functions"""
 import subprocess
 
-def do_cmd(command: str, check: bool = False) -> str:
+def do_cmd(command: str, check: bool = False, as_list: bool = False) -> str|list[str]:
     """Given a command, run the command and return the output"""
     rtn = subprocess.run(command.split(' '), stdout=subprocess.PIPE, check=check).stdout.decode('utf-8')
+
+    if as_list:
+        return rtn.splitlines()
     return rtn
 
 def banner(text: str, width: int, banner_char: str = '#') -> str:

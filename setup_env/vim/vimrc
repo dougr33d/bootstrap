@@ -5,8 +5,8 @@ call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
 Plug 'airblade/vim-rooter'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ervandew/supertab'
+"Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ervandew/supertab'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'justinmk/vim-sneak'
@@ -18,7 +18,8 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
+"Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -31,13 +32,13 @@ Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
 
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+" nmap ga <Plug>(EasyAlign)
 
 nmap <C-l> :bn<cr>
 nmap <C-h> :bp<cr>
@@ -86,6 +87,7 @@ let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_sep = '>'
 "let g:airline#extensions#tabline#left_alt_sep = '>'
 "let g:airline_statusline_ontop=1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Show trailing whitepace and spaces before a tab:
 :highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
@@ -98,11 +100,11 @@ augroup END
 
 let NERDTreeQuitOnOpen=1
 
-if executable('rg')
-   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-endif
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
+" if executable('rg')
+"    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+" endif
+" let g:ctrlp_use_caching = 1
+" let g:ctrlp_clear_cache_on_exit = 0
 
 :silent let git_top_level_list=systemlist('git rev-parse --show-toplevel')
 :if len(git_top_level_list) > 0
@@ -128,3 +130,7 @@ augroup rainbow_parens
 augroup END
 
 autocmd FileType systemverilog setlocal commentstring=\/\/\ %s
+
+" let g:pymode_options_max_line_length=200
+" let g:pymode_options_colorcolumn = 0
+
