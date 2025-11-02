@@ -2,6 +2,22 @@
 
 TWD=$(git rev-parse --show-toplevel)
 
+maybe_mkdir(){
+    local dirname="$1"
+    local pretty="$2"
+
+    if [[ -z "$pretty" ]]; then
+        pretty="$dirname"
+    fi
+
+    if [[ ! -d $dirname ]]; then
+        echo "Creating $pretty"
+        mkdir -p $dirname
+    else
+        echo "Skipping creating $pretty (already exists)"
+    fi
+}
+
 ####
 # TMUX setup
 
@@ -37,6 +53,33 @@ else
 fi
 
 ####
+# NVIM setup
+
+echo
+echo "Setting up neovim..."
+
+NVIM_CFG="$HOME/.config/nvim/"
+
+maybe_mkdir $NVIM_CFG "neovim config directory"
+
+NVIM_INIT="$NVIM_CFG/init.lua"
+
+if [[ -e $NVIM_INIT ]] && grep -q "Begin bootstrap" $NVIM_INIT; then
+    echo "skipping (found Begin bootstrap section in $NVIM_INIT)"
+else
+    echo ""                              >> $NVIM_INIT
+    echo "-- Begin bootstrap"            >> $NVIM_INIT
+    echo "require('dougr33d_bootstrap')" >> $NVIM_INIT
+    echo "-- End bootstrap"              >> $NVIM_INIT
+
+    NVIM_LUA="$NVIM_CFG/lua/"
+    maybe_mkdir $NVIM_LUA "neovim lua/ directory"
+
+    echo "... linking dougr33d_bootstrap"
+    ln -s $PWD/nvim/lua/dougr33d_bootstrap $NVIM_CFG/lua/
+fi
+
+####
 # VIM setup
 
 echo
@@ -62,10 +105,7 @@ echo "installing plugins"
 vim +PlugInstall +qall
 
 VIM_AFTER_PLUGIN_DIR=$HOME/.vim/after/plugin
-if [ ! -d $VIM_AFTER_PLUGIN_DIR ]; then
-   echo "Creating after plugin dir"
-   mkdir -p $VIM_AFTER_PLUGIN_DIR
-fi
+maybe_mkdir $VIM_AFTER_PLUGIN_DIR "after plugin dir"
 
 VIM_ABOLISH_FILE=${VIM_AFTER_PLUGIN_DIR}/abolish.vim
 if [ -e "${VIM_ABOLISH_FILE}" ]; then
