@@ -7,7 +7,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-rooter'
 "Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'ervandew/supertab'
-Plug 'junegunn/rainbow_parentheses.vim'
+" Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'justinmk/vim-sneak'
 Plug 'pedrohdz/vim-yaml-folds'
@@ -32,7 +32,7 @@ Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
 
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -46,10 +46,10 @@ nmap <C-h> :bp<cr>
 :set backspace=2
 :set hidden
 :set incsearch
-:set tabstop=3 
-:set softtabstop=3 
+:set tabstop=4 
+:set softtabstop=4 
 :set expandtab 
-:set shiftwidth=3 
+:set shiftwidth=4 
 :set smartcase
 :set autoindent
 :set smartindent
@@ -98,6 +98,11 @@ augroup newsv
    autocmd BufNewFile,BufRead *.vs set syntax=systemverilog
 augroup END
 
+augroup svpkg
+   au!
+   autocmd BufNewFile,BufRead *.pkg set syntax=systemverilog
+augroup END
+
 let NERDTreeQuitOnOpen=1
 
 " if executable('rg')
@@ -124,10 +129,10 @@ set autochdir
 command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case " . shellescape(<q-args>), 1, {"dir": FindRootDirectory()})
 command! -bang -nargs=* RG call fzf#vim#grep2("rg --column --line-number --no-heading --color=always --smart-case -- ", <q-args>, 1, {"dir": FindRootDirectory()})
 
-augroup rainbow_parens
-   autocmd!
-   autocmd FileType python,systemverilog,verilog RainbowParentheses
-augroup END
+" augroup rainbow_parens
+"    autocmd!
+"    autocmd FileType python,systemverilog,verilog RainbowParentheses
+" augroup END
 
 autocmd FileType systemverilog setlocal commentstring=\/\/\ %s
 
